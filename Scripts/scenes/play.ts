@@ -31,9 +31,9 @@ module scenes {
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
-            for (let pipe of this._pipes) {
+            /*for (let pipe of this._pipes) {
                 this._scrollableObjContainer.addChild(pipe);
-            }
+            }*/
 
             createjs.Sound.play("theme");
 
@@ -55,9 +55,17 @@ module scenes {
                 this._scrollBGForward(this._player.getVelocity().x);
             }
 
-            if (!this._player.getIsGrounded())
+            //for border
+            if (!this._player.getIsGrounded()){
                 this._checkPlayerWithFloor();
+            }
 
+            if (controls.UP) {
+                this._player.moveUp();
+            }
+            if (controls.DOWN) {
+                this._player.moveDown();
+            }
 
             if (controls.LEFT) {
                 this._player.moveLeft();
@@ -66,8 +74,9 @@ module scenes {
                 this._player.moveRight();
             }
 
-            if (!controls.RIGHT && !controls.LEFT) {
+            if (!controls.RIGHT && !controls.LEFT && !controls.UP && !controls.DOWN) {
                 this._player.resetAcceleration();
+                this._player.setVelocity(new objects.Vector2(0,0))
             }
         }
 
@@ -90,7 +99,7 @@ module scenes {
                     controls.RIGHT = true;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = true;
+                    controls.RUN = true;
                     break;
             }
         }
@@ -110,7 +119,7 @@ module scenes {
                     controls.RIGHT = false;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = false;
+                    controls.RUN = false;
                     break;
             }
         }
@@ -119,7 +128,8 @@ module scenes {
             if (this._scrollableObjContainer.regX < 3071 - 815)
                 this._scrollableObjContainer.regX += speed;
         }
-
+        
+        //may use for border
         private _checkPlayerWithFloor(): void {
             if (this._player.y > this._ground.y) {
                 console.log("HIT GROUND");

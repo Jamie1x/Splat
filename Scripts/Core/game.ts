@@ -93,6 +93,11 @@ function changeScene() : void {
             currentScene = new scenes.Play();
             console.log("Starting PLAY scene");
             break;
+        case config.Scene.GAMEOVER :
+            stage.removeAllChildren();
+            currentScene = new scenes.GameOver();
+            console.log("Starting GAMEOVER scene");
+            break;
     }
     
 }

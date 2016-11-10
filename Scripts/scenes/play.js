@@ -25,10 +25,9 @@ var scenes;
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
-            for (var _i = 0, _a = this._pipes; _i < _a.length; _i++) {
-                var pipe = _a[_i];
+            /*for (let pipe of this._pipes) {
                 this._scrollableObjContainer.addChild(pipe);
-            }
+            }*/
             createjs.Sound.play("theme");
             this._ground.y = 538;
             this.addChild(this._scrollableObjContainer);
@@ -41,16 +40,25 @@ var scenes;
             if (this.checkScroll()) {
                 this._scrollBGForward(this._player.getVelocity().x);
             }
-            if (!this._player.getIsGrounded())
+            //for border
+            if (!this._player.getIsGrounded()) {
                 this._checkPlayerWithFloor();
+            }
+            if (controls.UP) {
+                this._player.moveUp();
+            }
+            if (controls.DOWN) {
+                this._player.moveDown();
+            }
             if (controls.LEFT) {
                 this._player.moveLeft();
             }
             if (controls.RIGHT) {
                 this._player.moveRight();
             }
-            if (!controls.RIGHT && !controls.LEFT) {
+            if (!controls.RIGHT && !controls.LEFT && !controls.UP && !controls.DOWN) {
                 this._player.resetAcceleration();
+                this._player.setVelocity(new objects.Vector2(0, 0));
             }
         };
         Play.prototype._onKeyDown = function (event) {
@@ -72,7 +80,7 @@ var scenes;
                     controls.RIGHT = true;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = true;
+                    controls.RUN = true;
                     break;
             }
         };
@@ -91,7 +99,7 @@ var scenes;
                     controls.RIGHT = false;
                     break;
                 case keys.SPACE:
-                    controls.SHOOT = false;
+                    controls.RUN = false;
                     break;
             }
         };
@@ -99,6 +107,7 @@ var scenes;
             if (this._scrollableObjContainer.regX < 3071 - 815)
                 this._scrollableObjContainer.regX += speed;
         };
+        //may use for border
         Play.prototype._checkPlayerWithFloor = function () {
             if (this._player.y > this._ground.y) {
                 console.log("HIT GROUND");
