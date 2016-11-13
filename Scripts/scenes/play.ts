@@ -3,10 +3,10 @@ module scenes {
 
         private _bg: createjs.Bitmap;
 
-        private _ground: createjs.Bitmap;
+        //private _ground: createjs.Bitmap;
         private _player: objects.Player;
 
-        private _pipes: objects.Pipe[];
+        private _enemies: objects.Enemy[];
         private _scrollableObjContainer: createjs.Container;
 
         private _scrollTrigger: number = 350;
@@ -18,26 +18,22 @@ module scenes {
 
         public start(): void {
             this._bg = new createjs.Bitmap(assets.getResult("bg"));
-            this._ground = new createjs.Bitmap(assets.getResult("floor"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
 
-            this._pipes = [];
-            this._pipes.push(new objects.Pipe(config.PipeSize.SMALL, new objects.Vector2(1208, 450)));
-            this._pipes.push(new objects.Pipe(config.PipeSize.MEDIUM, new objects.Vector2(1640, 408)));
-            this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(1984, 363)));
-            this._pipes.push(new objects.Pipe(config.PipeSize.LARGE, new objects.Vector2(2458, 363)));
+            this._enemies = [];
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1208, 450)));
 
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
-            this._scrollableObjContainer.addChild(this._ground);
-            /*for (let pipe of this._pipes) {
-                this._scrollableObjContainer.addChild(pipe);
-            }*/
+            //this._scrollableObjContainer.addChild(this._ground);
+            for (let enemy of this._enemies) {
+                this._scrollableObjContainer.addChild(enemy);
+            }
 
-            createjs.Sound.play("theme");
+            //createjs.Sound.play("theme",0,0,0,1000);
 
-            this._ground.y = 538;
+            //this._ground.y = 538;
 
             this.addChild(this._scrollableObjContainer);
 
@@ -56,9 +52,7 @@ module scenes {
             }
 
             //for border
-            if (!this._player.getIsGrounded()){
-                this._checkPlayerWithFloor();
-            }
+            this._checkPlayerWithFloor();
 
             if (controls.UP) {
                 this._player.moveUp();
@@ -74,28 +68,38 @@ module scenes {
                 this._player.moveRight();
             }
 
-            if (!controls.RIGHT && !controls.LEFT && !controls.UP && !controls.DOWN) {
-                this._player.resetAcceleration();
-                this._player.setVelocity(new objects.Vector2(0,0))
+            if (controls.RUN) {
+                this._player.run();
+            }
+
+            if (!controls.RIGHT && !controls.LEFT) {
+                this._player.resetAccelerationX();
+            }
+            if (!controls.UP && !controls.DOWN) {
+                this._player.resetAccelerationY();
+            }
+
+            if (!controls.RUN) {
+                this._player.resetSpeed();
             }
         }
 
         private _onKeyDown(event: KeyboardEvent): void {
             switch (event.keyCode) {
                 case keys.W:
-                    console.log("W key pressed");
+                    //console.log("W key pressed");
                     controls.UP = true;
                     break;
                 case keys.S:
-                    console.log("S key pressed");
+                    //console.log("S key pressed");
                     controls.DOWN = true;
                     break;
                 case keys.A:
-                    console.log("A key pressed");
+                    //console.log("A key pressed");
                     controls.LEFT = true;
                     break;
                 case keys.D:
-                    console.log("D key pressed");
+                    //console.log("D key pressed");
                     controls.RIGHT = true;
                     break;
                 case keys.SPACE:
@@ -128,13 +132,18 @@ module scenes {
             if (this._scrollableObjContainer.regX < 3071 - 815)
                 this._scrollableObjContainer.regX += speed;
         }
-        
+
         //may use for border
         private _checkPlayerWithFloor(): void {
-            if (this._player.y > this._ground.y) {
+            if (this._player.y > config.Screen.HEIGHT -10) {
                 console.log("HIT GROUND");
-                this._player.y = this._ground.y;
-                this._player.setIsGrounded(true);
+                this._player._isGrounded = true;
+                this._player.y = config.Screen.HEIGHT - 11;
+                this._player.setVelocity(new objects.Vector2(0,0));
+                this._player.resetAccelerationY();
+            }
+            else {
+                this._player._isGrounded = false;
             }
         }
 

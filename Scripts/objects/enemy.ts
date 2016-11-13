@@ -1,24 +1,16 @@
 module objects {
     export class Enemy extends objects.GameObject {
 
-        private _move : objects.Vector2;
-        private _speed : number;
-
-        private _life : number;
-
         // public variables
         public name:string;
         public width:number;
         public height:number;
         public center:objects.Vector2;
 
-        constructor(imageString:string, life : number) {
-            super(enemyAtlas, imageString, "");
-            this._life = life;
-        }
-
-        get life() : number {
-            return this._life;
+        constructor(imageString:string, defaultPosition : objects.Vector2) {
+            super(atlas, imageString);
+            this.position.x = defaultPosition.x;
+            this.position.y = defaultPosition.y;
         }
 
         public update() : void {
@@ -33,12 +25,10 @@ module objects {
             return new objects.Vector2(this.x, this.y);
         }
 
-        public shot() : void {
-            this._life--;
+        public clamp() : void {
         }
 
-        private _dead() : void {
-            currentScene.removeChild(this);
+        public open() : void {
         }
     }
 }

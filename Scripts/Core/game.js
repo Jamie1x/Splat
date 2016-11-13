@@ -10,8 +10,7 @@ var scene;
 // Preload Assets required
 var assetData = [
     { id: "bg", src: "../../Assets/images/allScene.png" },
-    { id: "floor", src: "../../Assets/images/floor.png" },
-    { id: "atlas", src: "../../Assets/images/Test.png" },
+    { id: "atlas", src: "../../Assets/images/atlas.png" },
     { id: "theme", src: "../../Assets/audio/marioTheme.mp3" }
 ];
 function preload() {
@@ -31,31 +30,17 @@ function init() {
     createjs.Ticker.on("tick", this.gameLoop, this);
     var atlasData = {
         "images": [
-            /*
-            assets.getResult("player"),
-            assets.getResult("block"),
-            assets.getResult("pipe1.png"),
-            assets.getResult("pipe2.png"),
-            assets.getResult("pipe3.png"),
-            assets.getResult("qBlock")
-            */
             assets.getResult("atlas")
         ],
         "frames": [
-            [40, 0, 43, 86, 0, 0, 0],
-            [83, 0, 45, 45, 0, 0, 0],
-            [0, 216, 87, 87, 0, 0, 0],
-            [0, 86, 87, 130, 0, 0, 0],
-            [0, 303, 93, 175, 0, 0, 0],
-            [0, 0, 40, 45, 0, 0, 0]
+            [0, 350, 59, 30, 0, 0, 0],
+            [46, 0, 46, 350, 0, 0, 0],
+            [0, 0, 46, 350, 0, 0, 0]
         ],
         "animations": {
             "player": { "frames": [0] },
-            "block": { "frames": [1] },
-            "pipe1": { "frames": [2] },
-            "pipe2": { "frames": [3] },
-            "pipe3": { "frames": [4] },
-            "qBlock": { "frames": [5] }
+            "spikes": { "frames": [1] },
+            "bloodySpikes": { "frames": [2] }
         },
     };
     atlas = new createjs.SpriteSheet(atlasData);

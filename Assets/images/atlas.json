@@ -1,0 +1,39 @@
+{"frames": [
+
+{
+	"filename": "bloodySpikes.png",
+	"frame": {"x":0,"y":0,"w":46,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":350},
+	"sourceSize": {"w":46,"h":350},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "player.png",
+	"frame": {"x":0,"y":350,"w":59,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":59,"h":30},
+	"sourceSize": {"w":59,"h":30},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "spikes.png",
+	"frame": {"x":46,"y":0,"w":46,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":350},
+	"sourceSize": {"w":46,"h":350},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":92,"h":380},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:168ce3d27e61f7bc432567aa870693b4:bd8aab1b142639c54e1e30de958f5e6e:cbce6b53f0f49e0bf15173c25c41f876$"
+}
+}

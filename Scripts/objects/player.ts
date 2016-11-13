@@ -1,13 +1,14 @@
 module objects {
     export class Player extends objects.GameObject {
 
-        private _maxSpeedX : number = 10;
-        private _maxSpeedY : number = 10;
+        private _maxSpeedX : number = 5;
+        private _maxSpeedY : number = 5;
         private _velocity : objects.Vector2;
         private _accelerationX : number;
         private _accelerationY : number;
-        private _friction : number = -1;
-        private _isGrounded : boolean = false;
+        private _friction : number = 0;
+        private _speed : number = 0.05;
+        public _isGrounded : boolean = false;
 
         constructor(imgString : string) {
             super(atlas, imgString);
@@ -55,32 +56,42 @@ module objects {
             this._velocity = newVelocity;
         }
 
-        public getIsGrounded() : boolean {
-            return this._isGrounded;
-        }
-
-        public setIsGrounded(b : boolean) : void {
-            this._isGrounded = b;
-        }
-
         public moveUp() : void {
-            this._accelerationY += -0.05;
+            this._accelerationY += -this._speed;
         }
 
         public moveDown() : void {
-            this._accelerationY += 0.05;
+            if(!this._isGrounded){
+            this._accelerationY += this._speed;
+            }
         }
 
         public moveLeft() : void {
-            this._accelerationX += -0.05;
+            this._accelerationX += -this._speed;
         }
 
         public moveRight() : void {
-            this._accelerationX += 0.05;
+            this._accelerationX += this._speed;
         }
 
-        public resetAcceleration() : void {
+        public run() : void {
+            this._maxSpeedX = 10;
+            this._maxSpeedY = 10;
+            this._speed = 0.5;
+        }
+
+        public resetSpeed() : void {
+            this._maxSpeedX = 5;
+            this._maxSpeedY = 5;
+            this._speed = 0.05;
+        }
+
+        public resetAccelerationX() : void {
             this._accelerationX = 0;
+        }
+
+        public resetAccelerationY() : void {
+            this._accelerationY = 0;
         }
     }
 }

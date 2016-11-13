@@ -9,9 +9,10 @@ var objects;
         __extends(Player, _super);
         function Player(imgString) {
             _super.call(this, atlas, imgString);
-            this._maxSpeedX = 10;
-            this._maxSpeedY = 10;
-            this._friction = -1;
+            this._maxSpeedX = 5;
+            this._maxSpeedY = 5;
+            this._friction = 0;
+            this._speed = 0.05;
             this._isGrounded = false;
             this.start();
         }
@@ -48,26 +49,35 @@ var objects;
         Player.prototype.setVelocity = function (newVelocity) {
             this._velocity = newVelocity;
         };
-        Player.prototype.getIsGrounded = function () {
-            return this._isGrounded;
-        };
-        Player.prototype.setIsGrounded = function (b) {
-            this._isGrounded = b;
-        };
         Player.prototype.moveUp = function () {
-            this._accelerationY += -0.05;
+            this._accelerationY += -this._speed;
         };
         Player.prototype.moveDown = function () {
-            this._accelerationY += 0.05;
+            if (!this._isGrounded) {
+                this._accelerationY += this._speed;
+            }
         };
         Player.prototype.moveLeft = function () {
-            this._accelerationX += -0.05;
+            this._accelerationX += -this._speed;
         };
         Player.prototype.moveRight = function () {
-            this._accelerationX += 0.05;
+            this._accelerationX += this._speed;
         };
-        Player.prototype.resetAcceleration = function () {
+        Player.prototype.run = function () {
+            this._maxSpeedX = 10;
+            this._maxSpeedY = 10;
+            this._speed = 0.5;
+        };
+        Player.prototype.resetSpeed = function () {
+            this._maxSpeedX = 5;
+            this._maxSpeedY = 5;
+            this._speed = 0.05;
+        };
+        Player.prototype.resetAccelerationX = function () {
             this._accelerationX = 0;
+        };
+        Player.prototype.resetAccelerationY = function () {
+            this._accelerationY = 0;
         };
         return Player;
     })(objects.GameObject);
