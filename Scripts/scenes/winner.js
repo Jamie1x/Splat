@@ -9,49 +9,48 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var scenes;
 (function (scenes) {
-    var Menu = (function (_super) {
-        __extends(Menu, _super);
+    var Winner = (function (_super) {
+        __extends(Winner, _super);
         // Menu Class Contructor
-        function Menu() {
+        function Winner() {
             _super.call(this);
         }
-        Menu.prototype.start = function () {
+        Winner.prototype.start = function () {
             //add background
             this._bg = new createjs.Bitmap(assets.getResult("BG"));
             this.addChild(this._bg);
-            //add title
-            this._title = new createjs.Bitmap(assets.getResult("Title"));
-            this._title.regX = this._title.getBounds().width / 2;
-            this._title.regY = this._title.getBounds().height / 2;
-            this._title.x = config.Screen.CENTER_X;
-            this._title.y = config.Screen.CENTER_Y - 100;
-            this.addChild(this._title);
+            //add game over text
+            this._winner = new createjs.Bitmap(assets.getResult("Winner"));
+            this._winner.regX = this._winner.getBounds().width / 2;
+            this._winner.regY = this._winner.getBounds().height / 2;
+            this._winner.x = config.Screen.CENTER_X;
+            this._winner.y = config.Screen.CENTER_Y - 100;
+            this.addChild(this._winner);
             //add buttons
-            /*this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
+            this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
             this.addChild(this._playBtn);
             this._playBtn.on("click", this._startButtonClick, this);
-
-            this._instructionsBtn = new objects.Button("InstructionsBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
-            this.addChild(this._instructionsBtn);
-            this._instructionsBtn.on("click", this._instructionsButtonClick, this);*/
+            this._menuBtn = new objects.Button("MenuBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
+            this.addChild(this._menuBtn);
+            this._menuBtn.on("click", this._menuButtonClick, this);
             // Add menu scene to global stage container
             stage.addChild(this);
         };
-        Menu.prototype.update = function () {
+        Winner.prototype.update = function () {
         };
         // Fucntion for when button is pressed
-        Menu.prototype._startButtonClick = function (event) {
+        Winner.prototype._startButtonClick = function (event) {
             // Change global scene variable to GAME. Call global changeScene() function
             scene = config.Scene.GAME;
             changeScene();
         };
-        Menu.prototype._instructionsButtonClick = function (event) {
+        Winner.prototype._menuButtonClick = function (event) {
             // Change global scene variable to GAME. Call global changeScene() function
-            scene = config.Scene.INSTRUCTIONS;
+            scene = config.Scene.MENU;
             changeScene();
         };
-        return Menu;
+        return Winner;
     })(objects.Scene);
-    scenes.Menu = Menu;
+    scenes.Winner = Winner;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=menu.js.map
+//# sourceMappingURL=winner.js.map

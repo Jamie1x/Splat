@@ -9,49 +9,48 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var scenes;
 (function (scenes) {
-    var Menu = (function (_super) {
-        __extends(Menu, _super);
+    var Instructions = (function (_super) {
+        __extends(Instructions, _super);
         // Menu Class Contructor
-        function Menu() {
+        function Instructions() {
             _super.call(this);
         }
-        Menu.prototype.start = function () {
+        Instructions.prototype.start = function () {
             //add background
             this._bg = new createjs.Bitmap(assets.getResult("BG"));
             this.addChild(this._bg);
-            //add title
-            this._title = new createjs.Bitmap(assets.getResult("Title"));
-            this._title.regX = this._title.getBounds().width / 2;
-            this._title.regY = this._title.getBounds().height / 2;
-            this._title.x = config.Screen.CENTER_X;
-            this._title.y = config.Screen.CENTER_Y - 100;
-            this.addChild(this._title);
+            //add instructions image
+            this._instructions = new createjs.Bitmap(assets.getResult("Instructions"));
+            this._instructions.regX = this._instructions.getBounds().width / 2;
+            this._instructions.regY = this._instructions.getBounds().height / 2;
+            this._instructions.x = config.Screen.CENTER_X;
+            this._instructions.y = config.Screen.CENTER_Y - 35;
+            this.addChild(this._instructions);
             //add buttons
-            /*this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
+            this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 200);
             this.addChild(this._playBtn);
             this._playBtn.on("click", this._startButtonClick, this);
-
-            this._instructionsBtn = new objects.Button("InstructionsBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
-            this.addChild(this._instructionsBtn);
-            this._instructionsBtn.on("click", this._instructionsButtonClick, this);*/
+            this._menuBtn = new objects.Button("MenuBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 200);
+            this.addChild(this._menuBtn);
+            this._menuBtn.on("click", this._menuButtonClick, this);
             // Add menu scene to global stage container
             stage.addChild(this);
         };
-        Menu.prototype.update = function () {
+        Instructions.prototype.update = function () {
         };
         // Fucntion for when button is pressed
-        Menu.prototype._startButtonClick = function (event) {
+        Instructions.prototype._startButtonClick = function (event) {
             // Change global scene variable to GAME. Call global changeScene() function
             scene = config.Scene.GAME;
             changeScene();
         };
-        Menu.prototype._instructionsButtonClick = function (event) {
+        Instructions.prototype._menuButtonClick = function (event) {
             // Change global scene variable to GAME. Call global changeScene() function
-            scene = config.Scene.INSTRUCTIONS;
+            scene = config.Scene.MENU;
             changeScene();
         };
-        return Menu;
+        return Instructions;
     })(objects.Scene);
-    scenes.Menu = Menu;
+    scenes.Instructions = Instructions;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=menu.js.map
+//# sourceMappingURL=instructions.js.map

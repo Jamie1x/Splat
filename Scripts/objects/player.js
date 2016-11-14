@@ -7,6 +7,7 @@ var objects;
 (function (objects) {
     var Player = (function (_super) {
         __extends(Player, _super);
+        //public _isRoofed: boolean = false;
         function Player(imgString) {
             _super.call(this, atlas, imgString);
             this._maxSpeedX = 5;
@@ -50,10 +51,15 @@ var objects;
             this._velocity = newVelocity;
         };
         Player.prototype.moveUp = function () {
+            /*if (!this._isRoofed) {
+                console.log("up");
+                
+            }*/
             this._accelerationY += -this._speed;
         };
         Player.prototype.moveDown = function () {
             if (!this._isGrounded) {
+                console.log("down");
                 this._accelerationY += this._speed;
             }
         };

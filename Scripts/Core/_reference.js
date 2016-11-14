@@ -11,5 +11,8 @@
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/vector2.ts" />
 /// <reference path="../scenes/menu.ts" />
-/// <reference path="../scenes/play.ts" /> 
+/// <reference path="../scenes/play.ts" />
+/// <reference path="../scenes/gameOver.ts" />
+/// <reference path="../scenes/instructions.ts" />
+/// <reference path="../scenes/winner.ts" />
 //# sourceMappingURL=_reference.js.map

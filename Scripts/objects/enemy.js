@@ -9,10 +9,23 @@ var objects;
         __extends(Enemy, _super);
         function Enemy(imageString, defaultPosition) {
             _super.call(this, atlas, imageString);
-            this.position.x = defaultPosition.x;
-            this.position.y = defaultPosition.y;
+            this._isClosing = false;
+            this.x = defaultPosition.x;
+            this.y = defaultPosition.y;
         }
         Enemy.prototype.update = function () {
+            if (this._isClosing) {
+                this.setTransform(this.x, this.y -= 20, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
+            }
+            else {
+                this.setTransform(this.x, this.y += 3, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
+            }
+            if (this.y <= config.Screen.CENTER_Y) {
+                this._isClosing = false;
+            }
+            if (this.y >= config.Screen.HEIGHT - 40) {
+                this._isClosing = true;
+            }
         };
         Enemy.prototype.setPosition = function (pos) {
             this.x = pos.x;
@@ -20,10 +33,6 @@ var objects;
         };
         Enemy.prototype.getPosition = function () {
             return new objects.Vector2(this.x, this.y);
-        };
-        Enemy.prototype.clamp = function () {
-        };
-        Enemy.prototype.open = function () {
         };
         return Enemy;
     })(objects.GameObject);

@@ -17,12 +17,14 @@ module scenes {
         }
 
         public start(): void {
-            this._bg = new createjs.Bitmap(assets.getResult("bg"));
+            this._bg = new createjs.Bitmap(assets.getResult("GameBg"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
+            this._player.position.y = config.Screen.CENTER_Y;
+            this._player.position.x = config.Screen.CENTER_X;
 
             this._enemies = [];
-            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1208, 450)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT - 40)));
 
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
@@ -46,13 +48,16 @@ module scenes {
         public update(): void {
 
             this._player.update();
+            for(let enemy of this._enemies) {
+                enemy.update();
+            }
 
             if (this.checkScroll()) {
                 this._scrollBGForward(this._player.getVelocity().x);
             }
 
             //for border
-            this._checkPlayerWithFloor();
+            //this._checkPlayerWithFloor();
 
             if (controls.UP) {
                 this._player.moveUp();
@@ -135,16 +140,26 @@ module scenes {
 
         //may use for border
         private _checkPlayerWithFloor(): void {
-            if (this._player.y > config.Screen.HEIGHT -10) {
+            //check floor
+            if (this._player.y > config.Screen.HEIGHT - 10) {
                 console.log("HIT GROUND");
                 this._player._isGrounded = true;
                 this._player.y = config.Screen.HEIGHT - 11;
-                this._player.setVelocity(new objects.Vector2(0,0));
+                this._player.setVelocity(new objects.Vector2(0, 0));
                 this._player.resetAccelerationY();
             }
             else {
                 this._player._isGrounded = false;
             }
+
+            //check ceiling
+            /*if (this._player.y < 10) {
+                console.log("HIT ROOF");
+                this._player._isRoofed = true;
+                this._player.y = 15;
+                this._player.setVelocity(new objects.Vector2(0, 0));
+                this._player.resetAccelerationY();
+            }*/
         }
 
         private checkScroll(): boolean {

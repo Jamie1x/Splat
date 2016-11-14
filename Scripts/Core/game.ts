@@ -13,9 +13,10 @@ var scene: number;
 
 // Preload Assets required
 var assetData:objects.Asset[] = [
-    {id: "bg", src: "../../Assets/images/allScene.png"},
+    {id: "GameBg", src: "../../Assets/images/allScene.png"},
     {id: "atlas", src: "../../Assets/images/atlas.png"},
-    {id: "theme", src: "../../Assets/audio/marioTheme.mp3"}
+    {id: "theme", src: "../../Assets/audio/marioTheme.mp3"},
+    {id: "Title", src: "../../Assets/images/title.png"}
 ];
 
 function preload() {
@@ -53,7 +54,7 @@ function init() {
 
     atlas = new createjs.SpriteSheet(atlasData);
 
-    scene = config.Scene.GAME;
+    scene = config.Scene.MENU;
     changeScene();
 }
 
@@ -82,6 +83,16 @@ function changeScene() : void {
             stage.removeAllChildren();
             currentScene = new scenes.GameOver();
             console.log("Starting GAMEOVER scene");
+            break;
+        case config.Scene.INSTRUCTIONS :
+            stage.removeAllChildren();
+            currentScene = new scenes.Instructions();
+            console.log("Starting INSTRUCTIONS scene");
+            break;
+        case config.Scene.WINNER :
+            stage.removeAllChildren();
+            currentScene = new scenes.Winner();
+            console.log("Starting WINNER scene");
             break;
     }
     
