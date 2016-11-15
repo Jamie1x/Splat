@@ -27,13 +27,12 @@ var scenes;
             this._title.y = config.Screen.CENTER_Y - 100;
             this.addChild(this._title);
             //add buttons
-            /*this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
+            this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
             this.addChild(this._playBtn);
             this._playBtn.on("click", this._startButtonClick, this);
-
             this._instructionsBtn = new objects.Button("InstructionsBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
             this.addChild(this._instructionsBtn);
-            this._instructionsBtn.on("click", this._instructionsButtonClick, this);*/
+            this._instructionsBtn.on("click", this._instructionsButtonClick, this);
             // Add menu scene to global stage container
             stage.addChild(this);
         };

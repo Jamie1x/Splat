@@ -14,9 +14,13 @@ var scene: number;
 // Preload Assets required
 var assetData:objects.Asset[] = [
     {id: "GameBg", src: "../../Assets/images/allScene.png"},
+    {id: "BG", src: "../../Assets/images/bg.png"},
     {id: "atlas", src: "../../Assets/images/atlas.png"},
     {id: "theme", src: "../../Assets/audio/marioTheme.mp3"},
-    {id: "Title", src: "../../Assets/images/title.png"}
+    {id: "Title", src: "../../Assets/images/title.png"},
+    {id: "PlayBtn", src: "../../Assets/images/playBtn.png"},
+    {id: "MenuBtn", src: "../../Assets/images/menuBtn.png"},
+    {id: "InstructionsBtn", src: "../../Assets/images/instructionsBtn.png"}
 ];
 
 function preload() {
