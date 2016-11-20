@@ -19,7 +19,7 @@ var scenes;
             this._player.position.y = config.Screen.CENTER_Y;
             this._player.position.x = config.Screen.CENTER_X;
             this._enemies = [];
-            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT - 40)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT + 40)));
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             //this._scrollableObjContainer.addChild(this._ground);
@@ -39,6 +39,7 @@ var scenes;
             for (var _i = 0, _a = this._enemies; _i < _a.length; _i++) {
                 var enemy = _a[_i];
                 enemy.update();
+                collision.check(this._player, enemy);
             }
             if (this.checkScroll()) {
                 this._scrollBGForward(this._player.getVelocity().x);

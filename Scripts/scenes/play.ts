@@ -3,7 +3,6 @@ module scenes {
 
         private _bg: createjs.Bitmap;
 
-        //private _ground: createjs.Bitmap;
         private _player: objects.Player;
 
         private _enemies: objects.Enemy[];
@@ -24,7 +23,7 @@ module scenes {
             this._player.position.x = config.Screen.CENTER_X;
 
             this._enemies = [];
-            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT - 40)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT + 40)));
 
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
@@ -48,14 +47,15 @@ module scenes {
         public update(): void {
 
             this._player.update();
-            for(let enemy of this._enemies) {
+            for (let enemy of this._enemies) {
                 enemy.update();
+                collision.check(this._player, enemy);
             }
 
             if (this.checkScroll()) {
                 this._scrollBGForward(this._player.getVelocity().x);
             }
-
+            
             //for border
             //this._checkPlayerWithFloor();
 

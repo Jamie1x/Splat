@@ -90,6 +90,13 @@ module objects {
             this._maxSpeedX = 5;
             this._maxSpeedY = 5;
             this._speed = 0.05;
+
+            if(Math.abs(this._velocity.x) > this._maxSpeedX){
+                this._velocity.x = this._maxSpeedX;
+            }
+            if(Math.abs(this._velocity.y) > this._maxSpeedY){
+                this._velocity.y = this._maxSpeedY;
+            }
         }
 
         public resetAccelerationX(): void {
