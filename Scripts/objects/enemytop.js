@@ -1,3 +1,4 @@
+//code same as enemy script.... but upside down
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -5,41 +6,40 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
-    var Enemy = (function (_super) {
-        __extends(Enemy, _super);
-        function Enemy(imageString, defaultPosition) {
+    var EnemyTop = (function (_super) {
+        __extends(EnemyTop, _super);
+        function EnemyTop(imageString, defaultPosition) {
             _super.call(this, atlas, imageString);
             this._isClosing = false;
             this.x = defaultPosition.x;
             this.y = defaultPosition.y;
             this.regX = this.getBounds().width * 0.5;
             this.regY = this.getBounds().height * 0.5;
+            this.rotation = 180;
         }
-        Enemy.prototype.update = function () {
-            //shoots enemy up until it hits the center. then retracts
+        EnemyTop.prototype.update = function () {
             if (this._isClosing) {
-                this.setTransform(this.x, this.y -= 20, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
+                this.setTransform(this.x, this.y += 20, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
             }
             else {
-                this.setTransform(this.x, this.y += 3, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
+                this.setTransform(this.x, this.y -= 3, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
             }
-            //I am aware this boolean is pointless. but it works so im not changing it
-            if (this.y <= config.Screen.CENTER_Y * 1.5 + 25) {
+            if (this.y >= config.Screen.CENTER_Y / 2 - 25) {
                 this._isClosing = false;
             }
-            if (this.y >= config.Screen.HEIGHT + 100) {
+            if (this.y <= -100) {
                 this._isClosing = true;
             }
         };
-        Enemy.prototype.setPosition = function (pos) {
+        EnemyTop.prototype.setPosition = function (pos) {
             this.x = pos.x;
             this.y = pos.y;
         };
-        Enemy.prototype.getPosition = function () {
+        EnemyTop.prototype.getPosition = function () {
             return new objects.Vector2(this.x, this.y);
         };
-        return Enemy;
+        return EnemyTop;
     })(objects.GameObject);
-    objects.Enemy = Enemy;
+    objects.EnemyTop = EnemyTop;
 })(objects || (objects = {}));
-//# sourceMappingURL=enemy.js.map
+//# sourceMappingURL=enemytop.js.map

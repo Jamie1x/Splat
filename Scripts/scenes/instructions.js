@@ -27,10 +27,10 @@ var scenes;
             this._instructions.y = config.Screen.CENTER_Y;
             this.addChild(this._instructions);
             //add buttons
-            this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
+            this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 250);
             this.addChild(this._playBtn);
             this._playBtn.on("click", this._startButtonClick, this);
-            this._menuBtn = new objects.Button("MenuBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 100);
+            this._menuBtn = new objects.Button("MenuBtn", config.Screen.CENTER_X - 150, config.Screen.CENTER_Y + 250);
             this.addChild(this._menuBtn);
             this._menuBtn.on("click", this._menuButtonClick, this);
             // Add menu scene to global stage container

@@ -4,7 +4,7 @@ module scenes {
         private _bg: createjs.Bitmap;
 
         private _player: objects.Player;
-
+        private _scoreLbl: createjs.Text;
         private _enemies: objects.Enemy[];
         private _scrollableObjContainer: createjs.Container;
 
@@ -16,25 +16,52 @@ module scenes {
         }
 
         public start(): void {
+            score = 1000;
             this._bg = new createjs.Bitmap(assets.getResult("GameBg"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
             this._player.position.y = config.Screen.CENTER_Y;
             this._player.position.x = config.Screen.CENTER_X;
 
+            this._scoreLbl = new createjs.Text("Score: " + score, "50px Times New Roman", "#FFFFFF");
+            this._scoreLbl.y = 20;
+            this.addChild(this._scoreLbl);
+
             this._enemies = [];
-            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(500, config.Screen.HEIGHT + 40)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(600, config.Screen.HEIGHT + 8)));            
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(800, config.Screen.HEIGHT + 21)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1000, config.Screen.HEIGHT + 83)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1200, config.Screen.HEIGHT + 32)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1400, config.Screen.HEIGHT + 23)));            
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1600, config.Screen.HEIGHT + 91)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(1800, config.Screen.HEIGHT + 97)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(2000, config.Screen.HEIGHT + 46)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(2200, config.Screen.HEIGHT + 77)));            
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(2400, config.Screen.HEIGHT + 63)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(2600, config.Screen.HEIGHT + 4)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(2800, config.Screen.HEIGHT + 38)));
+            this._enemies.push(new objects.Enemy("spikes", new objects.Vector2(3000, config.Screen.HEIGHT + 32)));
+
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(600, -8)));            
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(800, -21)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(1000, -83)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(1200, -32)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(1400, -23)));            
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(1600, -91)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(1800, -97)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(2000, -46)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(2200, -77)));            
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(2400, -63)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(2600, -4)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(2800, -38)));
+            this._enemies.push(new objects.EnemyTop("spikes", new objects.Vector2(3000, -32)));
 
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
-            //this._scrollableObjContainer.addChild(this._ground);
+            this._scrollableObjContainer.addChild(this._scoreLbl);
             for (let enemy of this._enemies) {
                 this._scrollableObjContainer.addChild(enemy);
             }
-
-            //createjs.Sound.play("theme",0,0,0,1000);
-
-            //this._ground.y = 538;
 
             this.addChild(this._scrollableObjContainer);
 
@@ -45,43 +72,47 @@ module scenes {
         }
 
         public update(): void {
-
+            //score stops at finish line
+            if(this._player.x <= 3071){
+            score--;
+            }
+            this._scoreLbl.text = "Score: " + score;
+            //score follows player, then stops at end
+            this._scoreLbl.x = this._player.x - 350;
+            if(this._scoreLbl.x >= 3121){
+                this._scoreLbl.x = 3121;
+            }
+            //player loses when time runs out
+            if(score <= 0){
+                scene = config.Scene.GAMEOVER;
+                changeScene();
+            }
+            //collision detection
             this._player.update();
             for (let enemy of this._enemies) {
                 enemy.update();
                 collision.check(this._player, enemy);
             }
 
+            if(this._player.x > 3900){
+                scene = config.Scene.WINNER;
+                changeScene();
+            }
+
             if (this.checkScroll()) {
                 this._scrollBGForward(this._player.getVelocity().x);
             }
-            
-            //for border
-            //this._checkPlayerWithFloor();
 
-            if (controls.UP) {
-                this._player.moveUp();
-            }
-            if (controls.DOWN) {
-                this._player.moveDown();
-            }
-
-            if (controls.LEFT) {
-                this._player.moveLeft();
-            }
             if (controls.RIGHT) {
                 this._player.moveRight();
             }
 
-            if (controls.RUN) {
-                this._player.run();
-            }
-
-            if (!controls.RIGHT && !controls.LEFT) {
+            if (controls.LEFT) {
                 this._player.resetAccelerationX();
             }
-            if (!controls.UP && !controls.DOWN) {
-                this._player.resetAccelerationY();
+
+            if (controls.RUN) {
+                this._player.run();
             }
 
             if (!controls.RUN) {
@@ -134,32 +165,8 @@ module scenes {
         }
 
         private _scrollBGForward(speed: number): void {
-            if (this._scrollableObjContainer.regX < 3071 - 815)
+            if (this._scrollableObjContainer.regX < 3871 - 815)
                 this._scrollableObjContainer.regX += speed;
-        }
-
-        //may use for border
-        private _checkPlayerWithFloor(): void {
-            //check floor
-            if (this._player.y > config.Screen.HEIGHT - 10) {
-                console.log("HIT GROUND");
-                this._player._isGrounded = true;
-                this._player.y = config.Screen.HEIGHT - 11;
-                this._player.setVelocity(new objects.Vector2(0, 0));
-                this._player.resetAccelerationY();
-            }
-            else {
-                this._player._isGrounded = false;
-            }
-
-            //check ceiling
-            /*if (this._player.y < 10) {
-                console.log("HIT ROOF");
-                this._player._isRoofed = true;
-                this._player.y = 15;
-                this._player.setVelocity(new objects.Vector2(0, 0));
-                this._player.resetAccelerationY();
-            }*/
         }
 
         private checkScroll(): boolean {

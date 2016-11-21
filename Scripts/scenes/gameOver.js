@@ -19,6 +19,10 @@ var scenes;
             //add background
             this._bg = new createjs.Bitmap(assets.getResult("BG"));
             this.addChild(this._bg);
+            this._clamp1 = new objects.EnemyTop("bloodySpikes", new objects.Vector2(config.Screen.CENTER_X, 0));
+            this._clamp2 = new objects.Enemy("bloodySpikes", new objects.Vector2(config.Screen.CENTER_X, config.Screen.HEIGHT));
+            this.addChild(this._clamp1);
+            this.addChild(this._clamp2);
             //add game over text
             this._gameOver = new createjs.Bitmap(assets.getResult("GameOver"));
             this._gameOver.regX = this._gameOver.getBounds().width / 2;
@@ -37,6 +41,8 @@ var scenes;
             stage.addChild(this);
         };
         GameOver.prototype.update = function () {
+            this._clamp1.update();
+            this._clamp2.update();
         };
         // Fucntion for when button is pressed
         GameOver.prototype._startButtonClick = function (event) {

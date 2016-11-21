@@ -1,5 +1,7 @@
+//code same as enemy script.... but upside down
+
 module objects {
-    export class Enemy extends objects.GameObject {
+    export class EnemyTop extends objects.GameObject {
 
         // public variables
         public name: string;
@@ -14,20 +16,20 @@ module objects {
             this.y = defaultPosition.y;
             this.regX = this.getBounds().width * 0.5;
             this.regY = this.getBounds().height * 0.5;
+            this.rotation = 180;
         }
 
         public update(): void {
-            //shoots enemy up until it hits the center. then retracts
             if (this._isClosing) {
-                this.setTransform(this.x, this.y -= 20, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
+                this.setTransform(this.x, this.y += 20, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);
             } else {
-                this.setTransform(this.x, this.y += 3, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);                
+                this.setTransform(this.x, this.y -= 3, this.scaleX, this.scaleY, this.rotation, this.skewX, this.skewY, this.regX, this.regY);                
             }
-            //I am aware this boolean is pointless. but it works so im not changing it
-            if(this.y <= config.Screen.CENTER_Y * 1.5 + 25){
+
+            if(this.y >= config.Screen.CENTER_Y / 2 - 25){
                 this._isClosing = false;
             }
-            if(this.y >= config.Screen.HEIGHT + 100){
+            if(this.y <= -100){
                 this._isClosing = true;
             }
         }

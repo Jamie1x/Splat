@@ -26,6 +26,10 @@ var scenes;
             this._winner.x = config.Screen.CENTER_X;
             this._winner.y = config.Screen.CENTER_Y - 100;
             this.addChild(this._winner);
+            this._scoreLbl = new createjs.Text("Score: " + score, "50px Times New Roman", "#FFFFFF");
+            this._scoreLbl.y = 20;
+            this._scoreLbl.x = 50;
+            this.addChild(this._scoreLbl);
             //add buttons
             this._playBtn = new objects.Button("PlayBtn", config.Screen.CENTER_X + 150, config.Screen.CENTER_Y + 100);
             this.addChild(this._playBtn);

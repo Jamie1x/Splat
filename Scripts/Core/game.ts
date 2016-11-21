@@ -1,5 +1,9 @@
 /// <reference path = "_reference.ts" />
 
+//COMP397 Assignment 3
+//Jamie Kennedy - 300753196
+//November 20, 2016
+
 // Global Variables
 var assets: createjs.LoadQueue;
 var canvas: HTMLElement;
@@ -11,15 +15,17 @@ var atlas : createjs.SpriteSheet;
 var currentScene : objects.Scene;
 var scene: number;
 var collision : managers.Collision;
+var score : number;
 
 // Preload Assets required
 var assetData:objects.Asset[] = [
     {id: "GameBg", src: "../../Assets/images/allScene.png"},
     {id: "BG", src: "../../Assets/images/bg.png"},
     {id: "atlas", src: "../../Assets/images/atlas.png"},
-    {id: "theme", src: "../../Assets/audio/marioTheme.mp3"},
+    {id: "Theme", src: "../../Assets/audio/theme.wav"},
     {id: "Title", src: "../../Assets/images/title.png"},
     {id: "GameOver", src: "../../Assets/images/gameOver.png"},
+    {id: "Winner", src: "../../Assets/images/Winner.png"},
     {id: "Instructions", src: "../../Assets/images/Instructions.png"},
     {id: "PlayBtn", src: "../../Assets/images/playBtn.png"},
     {id: "MenuBtn", src: "../../Assets/images/menuBtn.png"},
@@ -43,6 +49,8 @@ function init() {
     createjs.Ticker.setFPS(config.Game.FPS);
     createjs.Ticker.on("tick", this.gameLoop, this);
     collision = new managers.Collision();
+
+    createjs.Sound.play("Theme",0,0,0,1000);
 
     let atlasData = {
         "images": [

@@ -14,6 +14,8 @@ module scenes {
         private _bg: createjs.Bitmap;
         private _gameOver: createjs.Bitmap;
         private _scoreLbl: createjs.Text;
+        private _clamp1 : objects.EnemyTop;
+        private _clamp2 : objects.Enemy;
         // Menu Class Contructor
         constructor()
         {
@@ -24,6 +26,11 @@ module scenes {
             //add background
             this._bg = new createjs.Bitmap(assets.getResult("BG"));
             this.addChild(this._bg);
+
+            this._clamp1 = new objects.EnemyTop("bloodySpikes", new objects.Vector2(config.Screen.CENTER_X, 0));
+            this._clamp2 = new objects.Enemy("bloodySpikes", new objects.Vector2(config.Screen.CENTER_X, config.Screen.HEIGHT));
+            this.addChild(this._clamp1);
+            this.addChild(this._clamp2);
 
             //add game over text
             this._gameOver = new createjs.Bitmap(assets.getResult("GameOver"));
@@ -47,7 +54,8 @@ module scenes {
         }
 
         public update() : void {
-
+            this._clamp1.update();
+            this._clamp2.update();
         }
 
         // Fucntion for when button is pressed
